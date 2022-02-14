@@ -1,0 +1,26 @@
+1. python setup.py build
+2. python setup.py install
+3. python slim/setup.py build
+4. python slim/setup.py install
+
+5. python xml_to_csv.py
+
+6. python generate_tfrecord.py --csv_input=images\train_labels.csv --image_dir=images\train --output_path=train.record
+7. python generate_tfrecord.py --csv_input=images\test_labels.csv --image_dir=images\test --output_path=test.record
+
+8. python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v2_coco.config
+
+
+9. python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/ssd_mobilenet_v2_coco.config --trained_checkpoint_prefix training/model.ckpt-XXXX --output_directory inference_graph
+
+10. python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_resnet101_coco.config
+
+11. python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/faster_rcnn_resnet101_coco.config --trained_checkpoint_prefix training/model.ckpt-10109 --output_directory inference_graph
+
+12. python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_resnet50_v1_fpn_shared_box_predictor_640x640_coco14_sync.config
+
+13. python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/ssd_resnet50_v1_fpn_shared_box_predictor_640x640_coco14_sync.config --trained_checkpoint_prefix training/model.ckpt-XXXX --output_directory inference_graph
+set PATH=%PATH%;PYTHONPATH
+set PYTHONPATH=D:\Duc\Code\tensorflow1\models;D:\Duc\Code\tensorflow1\models\research;D:\Duc\Code\tensorflow1\models\research\slim
+
+python model_main_tf2.py --model_dir=training/ --num_train_steps=20000 --sample_1_of_n_eval_examples=66 --pipeline_config_path=training/ssd_mobilenet_v2_320x320_coco17_tpu-8.config --alsologtostderr
